@@ -33,7 +33,7 @@ public class CustomerService {
         customer.setPec(customerRegisterDTO.pec());
         customer.setPhone(customerRegisterDTO.phone());
         customer.setSertionDate(customerRegisterDTO.sertionDate());
-        return customer;
+        return this.customerDAO.save(customer);
     }
     public Customer findById(UUID customerId) {
         return this.customerDAO.findById(customerId).orElseThrow(() -> new NotFoundException(customerId));
