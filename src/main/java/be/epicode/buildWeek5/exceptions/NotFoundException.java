@@ -1,0 +1,16 @@
+package be.epicode.buildWeek5.exceptions;
+
+import lombok.Getter;
+
+import java.util.UUID;
+
+@Getter
+public class NotFoundException extends RuntimeException{
+    public NotFoundException(UUID id) {
+        super("id " + id + " not found!");
+    }
+
+    public NotFoundException(String message) {
+        super(message);
+    }
+}
