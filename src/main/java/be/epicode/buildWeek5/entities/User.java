@@ -36,7 +36,7 @@ public class User implements UserDetails {
 
     @JsonIgnore
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Client client;
+    private Customer customer;
 
     public User(String username, String email, String password, String name, String surname, String avatar, UserRole role) {
         this.username = username;
