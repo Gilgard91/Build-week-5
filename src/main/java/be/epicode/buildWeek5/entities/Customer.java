@@ -1,6 +1,7 @@
 package be.epicode.buildWeek5.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -21,7 +23,7 @@ public class Customer {
     private String vatNumber;
     private String email;
     private LocalDate sertionDate;
-    private LocalDate daleLastContact;
+    private LocalDate dateLastContact;
     private int annualTurnover;
     private String pec;
     private int phone;
