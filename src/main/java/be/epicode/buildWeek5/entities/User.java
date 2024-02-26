@@ -13,4 +13,9 @@ public class User {
     @Id
     @GeneratedValue
     private UUID id;
+    private String username;
+    private String email;
+    private String name;
+    private String surname;
+    private String avatar;
 }
