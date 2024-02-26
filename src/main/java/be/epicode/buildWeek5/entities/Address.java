@@ -23,6 +23,7 @@ public class Address {
     private int number;
     private int postalCode;
     private String municipality;
+    @Enumerated(EnumType.STRING)
     private AddressType addressType;
 
     public Address(String street, int number, int postalCode, String municipality, AddressType addressType) {
