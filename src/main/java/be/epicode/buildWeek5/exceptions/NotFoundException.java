@@ -2,12 +2,9 @@ package be.epicode.buildWeek5.exceptions;
 
 import java.util.UUID;
 
-public class NotFoundException extends RuntimeException {
-    public NotFoundException(String message) {
-        super(message);
-    }
+public class NotFoundException extends RuntimeException{
 
-    public NotFoundException(UUID id) {
-        super(id + " non trovato!");
-    }
+    public NotFoundException(UUID id){super("Id '" + id + "' not found");}
+
+    public NotFoundException(String message){super(message);}
 }
