@@ -16,12 +16,12 @@ import java.util.UUID;
 @Service
 public class CustomerService {
     @Autowired
-    private static CustomerDAO customerDAO;
+    private  CustomerDAO customerDAO;
 
     public Page<Customer> getCustomers(int pageNumber, int size, String orderBy) {
         if (size > 100) size = 100;
         Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(orderBy));
-        return customerDAO.findAll(pageable);
+        return this.customerDAO.findAll(pageable);
     }
     public Customer saveCustomer(CustomerRegisterDTO customerRegisterDTO) {
         Customer customer = new Customer();
@@ -35,8 +35,8 @@ public class CustomerService {
         customer.setSertionDate(customerRegisterDTO.sertionDate());
         return customer;
     }
-    public static Customer findById(UUID customerId) {
-        return customerDAO.findById(customerId).orElseThrow(() -> new NotFoundException(customerId));
+    public Customer findById(UUID customerId) {
+        return this.customerDAO.findById(customerId).orElseThrow(() -> new NotFoundException(customerId));
     }
     public Customer findByIdAndUpdate(UUID customerId, Customer updatingCustomer) {
         Customer customer = findById(customerId);
@@ -48,11 +48,11 @@ public class CustomerService {
         customer.setPec(updatingCustomer.getPec());
         customer.setPhone(updatingCustomer.getPhone());
         customer.setSertionDate(updatingCustomer.getSertionDate());
-        return customerDAO.save(customer);
+        return this.customerDAO.save(customer);
     }
 
     public void findByIdAndDelete(UUID customerId) {
         Customer customer = findById(customerId);
-        customerDAO.delete(customer);
+        this.customerDAO.delete(customer);
     }
 }

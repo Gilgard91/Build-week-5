@@ -15,35 +15,35 @@ import java.util.UUID;
 public class CustomerController {
 
     @Autowired
-    private static CustomerService customerService;
+    private  CustomerService customerService;
 
     @GetMapping
     public Page<Customer> getAllCustomer(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String orderBy) {
-        return customerService.getCustomers(page, size, orderBy);
+        return this.customerService.getCustomers(page, size, orderBy);
     }
 
     @PostMapping
     public Customer saveCustomer(@RequestBody CustomerRegisterDTO newCustomer) {
-        return customerService.saveCustomer(newCustomer);
+        return this.customerService.saveCustomer(newCustomer);
     }
 
     @GetMapping("/{id}")
     public Customer findById(@PathVariable UUID id) {
-        return CustomerService.findById(id);
+        return this.customerService.findById(id);
     }
 
     @PutMapping("/{id}")
     public Customer findByIdAndUpdate(@PathVariable UUID customerId, @RequestBody Customer updatingCustomer) {
-        return customerService.findByIdAndUpdate(customerId, updatingCustomer);
+        return this.customerService.findByIdAndUpdate(customerId, updatingCustomer);
     }
 
 @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdDelete(@PathVariable UUID customerId) {
-        customerService.findByIdAndDelete(customerId);
+        this.customerService.findByIdAndDelete(customerId);
 }
 
 }
