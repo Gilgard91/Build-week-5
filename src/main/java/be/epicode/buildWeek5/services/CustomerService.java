@@ -11,13 +11,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
 import java.util.UUID;
 
 @Service
 public class CustomerService {
     @Autowired
     private  CustomerDAO customerDAO;
-
+Random random = new Random();
     public Page<Customer> getCustomers(int pageNumber, int size, String orderBy) {
         if (size > 100) size = 100;
         Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(orderBy));
@@ -26,13 +27,18 @@ public class CustomerService {
     public Customer saveCustomer(CustomerRegisterDTO customerRegisterDTO) {
         Customer customer = new Customer();
         customer.setEmail(customerRegisterDTO.email());
-        customer.setAnnualTurnover(customerRegisterDTO.annualTurnover());
+        customer.setAnnualTurnover(random.nextInt(100000,1000000),customerRegisterDTO.annualTurnover());
         customer.setBusinessName(customerRegisterDTO.businessName());
         customer.setDateLastContact(customerRegisterDTO.dateLastContact());
-        customer.setVatNumber(customerRegisterDTO.vatNumber());
-        customer.setPec(customerRegisterDTO.pec());
+        customer.setVatNumber(String.valueOf(random.nextInt(100000,1000000)),customerRegisterDTO.vatNumber());
+        customer.setPec(customerRegisterDTO.nameContact(),customerRegisterDTO.surnameContact(),customerRegisterDTO.pec());
         customer.setPhone(customerRegisterDTO.phone());
         customer.setSertionDate(customerRegisterDTO.sertionDate());
+        customer.setEmailContact(customerRegisterDTO.email());
+        customer.setNameContact(customerRegisterDTO.nameContact());
+        customer.setSurnameContact(customerRegisterDTO.surnameContact());
+        customer.setPhoneContact(customerRegisterDTO.phone());
+        customer.setBusinessLogo("https://www.google.com/imgres?nid=k-make-you-laugh%2F&docid=hEAxWkpf0HHSKHDlAQMygUegUIARCdAQ");
         return this.customerDAO.save(customer);
     }
     public Customer findById(UUID customerId) {
@@ -55,4 +61,5 @@ public class CustomerService {
         Customer customer = findById(customerId);
         this.customerDAO.delete(customer);
     }
+
 }

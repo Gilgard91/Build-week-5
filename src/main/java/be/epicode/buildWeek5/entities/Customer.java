@@ -6,6 +6,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -45,4 +46,25 @@ private Address address;
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    public void setAnnualTurnover(int annualTurnover, int annualTurnoverCRDTO) {
+        this.annualTurnover = annualTurnoverCRDTO;
+        if (annualTurnoverCRDTO == 0) {
+            this.annualTurnover = annualTurnover;
+        }
+    }
+
+    public void setVatNumber(String vatNumber, String vatNumberCRDTO) {
+        this.vatNumber = vatNumberCRDTO;
+        if (Objects.equals(vatNumberCRDTO, "")) {
+            this.vatNumber = vatNumber;
+        }
+    }
+
+    public void setPec(String nameContactpecCRDTO,String surnameContactpecCRDTO, String pecCRDTO) {
+        this.pec = pecCRDTO;
+        if (Objects.equals(pecCRDTO, null)) {
+            this.pec = nameContactpecCRDTO + surnameContactpecCRDTO + "@pec.it";
+        }
+    }
 }

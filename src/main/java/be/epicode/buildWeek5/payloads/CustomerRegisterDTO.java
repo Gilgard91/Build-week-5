@@ -29,5 +29,12 @@ String vatNumber,
         String pec,
         @NotEmpty(message = "Phone number REQUIRED")
                  @Size(min = 3,max = 30, message = "The lenght of your Phone number is not long Enough")
-        int phone) {
+        int phone,
+        @NotEmpty(message = "Your Name is REQUIRED")
+        @Size(min = 3,max = 30, message = "The lenght of your Name is not long Enough")
+        String nameContact,
+        @NotEmpty(message = "Your SurnameContact is REQUIRED")
+        @Size(min = 3,max = 30, message = "The lenght of your SurnameContact is not long Enough")
+        String surnameContact,
+        String businessLogo) {
 }
