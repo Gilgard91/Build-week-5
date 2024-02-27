@@ -37,4 +37,11 @@ public class Address {
         this.municipality = municipality;
         this.addressType = addressType;
     }
+
+    public Address(String street, int number, int postalCode, AddressType addressType) {
+        this.street = street;
+        this.number = number;
+        this.postalCode = postalCode;
+        this.addressType = addressType;
+    }
 }

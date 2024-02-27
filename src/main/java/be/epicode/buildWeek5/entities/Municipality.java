@@ -12,35 +12,35 @@ import lombok.*;
 public class Municipality {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String ProvinceCode;
+//    @Column(nullable = false)
+//    private String ProvinceCode;
 
 
     @ManyToOne
     @JoinColumn(name = "province_id", nullable = false)
     private Province province;
 
-    public Municipality(Province province, String name) {
+    public Municipality(String name, Province province ) {
         this.province = province;
         this.name = name;
 
     }
 
-    public Municipality(String name, String provinceCode) {
-        this.name = name;
-        ProvinceCode = provinceCode;
-    }
-
-    public Municipality(String name, String provinceCode, Province province) {
-        this.name = name;
-        ProvinceCode = provinceCode;
-        this.province = province;
-    }
+//    public Municipality(String name, String provinceCode) {
+//        this.name = name;
+//        ProvinceCode = provinceCode;
+//    }
+//
+//    public Municipality(String name, String provinceCode, Province province) {
+//        this.name = name;
+//        ProvinceCode = provinceCode;
+//        this.province = province;
+//    }
 }

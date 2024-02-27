@@ -39,7 +39,7 @@ public class AddressService {
             throw new NotFoundException("Municipality not found: " + body.municipality().getName());
         }
         Address address = new Address(body.street(),body.number(),body.postalCode(),
-                body.municipality(),body.addressType());
+                found,body.addressType());
         address.setMunicipality(found);
         addressDAO.save(address);
 
