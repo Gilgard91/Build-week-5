@@ -25,6 +25,13 @@ Random random = new Random();
         Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(orderBy));
         return this.customerDAO.findAll(pageable);
     }
+
+//    public Page<Customer> getCustomersStartingwithLastName(int pageNumber, int size, String orderBy) {
+//        if (size > 100) size = 100;
+//        Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(orderBy));
+//        return this.customerDAO.findAll(pageable);
+//    }
+
     public Customer saveCustomer(CustomerRegisterDTO customerRegisterDTO) {
        int random1 = new Random().nextInt(ClientType.values().length);
         Customer customer = new Customer();
