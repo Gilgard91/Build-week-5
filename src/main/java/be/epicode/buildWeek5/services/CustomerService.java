@@ -1,6 +1,7 @@
 package be.epicode.buildWeek5.services;
 
-import be.epicode.buildWeek5.entities.ClientType;
+import be.epicode.buildWeek5.config.MailgunSender;
+import be.epicode.buildWeek5.enums.ClientType;
 import be.epicode.buildWeek5.entities.Customer;
 import be.epicode.buildWeek5.exceptions.NotFoundException;
 import be.epicode.buildWeek5.payloads.CustomerRegisterDTO;
@@ -19,6 +20,8 @@ import java.util.UUID;
 public class CustomerService {
     @Autowired
     private  CustomerDAO customerDAO;
+    @Autowired
+    private MailgunSender mailgunSender;
 Random random = new Random();
     public Page<Customer> getCustomers(int pageNumber, int size, String orderBy) {
         if (size > 100) size = 100;
@@ -48,8 +51,10 @@ Random random = new Random();
         customer.setSurnameContact(customerRegisterDTO.surnameContact());
         customer.setPhoneContact(customerRegisterDTO.phone());
         customer.setBusinessLogo("https://www.google.com/imgres?nid=k-make-you-laugh%2F&docid=hEAxWkpf0HHSKHDlAQMygUegUIARCdAQ");
-       customer.setClientType(ClientType.values()[random1].toString());
-        return this.customerDAO.save(customer);
+        customer.setClientType(ClientType.values()[random1].toString());
+        Customer savedCustomer = customerDAO.save(customer);
+        mailgunSender.sendRegistrationEmail(customer);
+        return savedCustomer;
     }
     public Customer findById(UUID customerId) {
         return this.customerDAO.findById(customerId).orElseThrow(() -> new NotFoundException(customerId));

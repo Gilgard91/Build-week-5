@@ -1,5 +1,6 @@
 package be.epicode.buildWeek5.entities;
 
+import be.epicode.buildWeek5.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;

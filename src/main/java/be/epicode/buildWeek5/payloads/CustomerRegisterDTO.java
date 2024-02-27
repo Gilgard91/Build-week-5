@@ -1,6 +1,6 @@
 package be.epicode.buildWeek5.payloads;
 
-import be.epicode.buildWeek5.entities.ClientType;
+import be.epicode.buildWeek5.enums.ClientType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 

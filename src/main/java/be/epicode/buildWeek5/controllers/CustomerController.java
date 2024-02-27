@@ -48,7 +48,7 @@ public class CustomerController {
         return this.customerService.findByIdAndUpdate(customerId, updatingCustomer);
     }
 
-@DeleteMapping
+    @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdDelete(@PathVariable UUID customerId) {
         this.customerService.findByIdAndDelete(customerId);
