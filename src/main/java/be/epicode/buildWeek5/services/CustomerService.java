@@ -58,6 +58,7 @@ Random random = new Random();
 //public Customer findByLastname(String lastname) {
 //        return this.customerDAO.findByLastName(lastname).orElseThrow(() -> new NotFoundLastnameException(lastname));
 //}
+
     public Customer findByIdAndUpdate(UUID customerId, Customer updatingCustomer) {
         Customer customer = findById(customerId);
         customer.setEmail(updatingCustomer.getEmail());
