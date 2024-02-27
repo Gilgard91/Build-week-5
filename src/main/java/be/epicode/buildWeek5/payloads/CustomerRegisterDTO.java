@@ -1,5 +1,6 @@
 package be.epicode.buildWeek5.payloads;
 
+import be.epicode.buildWeek5.entities.ClientType;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -36,5 +37,7 @@ String vatNumber,
         @NotEmpty(message = "Your SurnameContact is REQUIRED")
         @Size(min = 3,max = 30, message = "The lenght of your SurnameContact is not long Enough")
         String surnameContact,
+        @NotEmpty(message = "Your ClientType is REQUIRED")
+        ClientType clientType,
         String businessLogo) {
 }

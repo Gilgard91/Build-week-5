@@ -1,5 +1,6 @@
 package be.epicode.buildWeek5.services;
 
+import be.epicode.buildWeek5.entities.ClientType;
 import be.epicode.buildWeek5.entities.Customer;
 import be.epicode.buildWeek5.exceptions.NotFoundException;
 import be.epicode.buildWeek5.payloads.CustomerRegisterDTO;
@@ -25,6 +26,7 @@ Random random = new Random();
         return this.customerDAO.findAll(pageable);
     }
     public Customer saveCustomer(CustomerRegisterDTO customerRegisterDTO) {
+       int random1 = new Random().nextInt(ClientType.values().length);
         Customer customer = new Customer();
         customer.setEmail(customerRegisterDTO.email());
         customer.setAnnualTurnover(random.nextInt(100000,1000000),customerRegisterDTO.annualTurnover());
@@ -39,6 +41,7 @@ Random random = new Random();
         customer.setSurnameContact(customerRegisterDTO.surnameContact());
         customer.setPhoneContact(customerRegisterDTO.phone());
         customer.setBusinessLogo("https://www.google.com/imgres?nid=k-make-you-laugh%2F&docid=hEAxWkpf0HHSKHDlAQMygUegUIARCdAQ");
+       customer.setClientType(ClientType.values()[random1].toString());
         return this.customerDAO.save(customer);
     }
     public Customer findById(UUID customerId) {

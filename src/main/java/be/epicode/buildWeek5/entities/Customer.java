@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Getter
 @Setter
@@ -33,7 +30,7 @@ public class Customer {
     private String surnameContact;
     private int phoneContact;
     private String businessLogo;
-    private ClientType clientType;
+    private String clientType;
 
     @OneToOne
     @JoinColumn(name = "address_id")
@@ -65,6 +62,20 @@ private Address address;
         this.pec = pecCRDTO;
         if (Objects.equals(pecCRDTO, null)) {
             this.pec = nameContactpecCRDTO + surnameContactpecCRDTO + "@pec.it";
+        }
+    }
+
+    public void setPhone(int phoneCRDTO) {
+        this.phone = phoneCRDTO;
+        if(phoneCRDTO == 0) {
+            this.phone = new Random().nextInt(300000000,399999999);
+        }
+    }
+
+    public void setPhoneContact(int phoneContactCRDTO) {
+        this.phoneContact = phoneContactCRDTO;
+        if(phoneContactCRDTO == 0) {
+            this.phoneContact = getPhone();
         }
     }
 }
