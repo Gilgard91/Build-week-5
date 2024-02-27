@@ -3,7 +3,6 @@ package be.epicode.buildWeek5.services;
 import be.epicode.buildWeek5.entities.ClientType;
 import be.epicode.buildWeek5.entities.Customer;
 import be.epicode.buildWeek5.exceptions.NotFoundException;
-import be.epicode.buildWeek5.exceptions.NotFoundLastnameException;
 import be.epicode.buildWeek5.payloads.CustomerRegisterDTO;
 import be.epicode.buildWeek5.repositories.CustomerDAO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +48,9 @@ Random random = new Random();
         return this.customerDAO.findById(customerId).orElseThrow(() -> new NotFoundException(customerId));
     }
 
-public Customer findByLastname(String lastname) {
-        return this.customerDAO.findByLastName(lastname).orElseThrow(() -> new NotFoundLastnameException(lastname));
-}
+//public Customer findByLastname(String lastname) {
+//        return this.customerDAO.findByLastName(lastname).orElseThrow(() -> new NotFoundLastnameException(lastname));
+//}
     public Customer findByIdAndUpdate(UUID customerId, Customer updatingCustomer) {
         Customer customer = findById(customerId);
         customer.setEmail(updatingCustomer.getEmail());

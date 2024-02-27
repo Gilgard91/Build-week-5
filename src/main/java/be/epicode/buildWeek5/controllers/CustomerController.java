@@ -25,6 +25,11 @@ public class CustomerController {
         return this.customerService.getCustomers(page, size, orderBy);
     }
 
+//    @GetMapping("/{surnameContact}")
+//    public Customer findByLastName(@PathVariable String surnameContact) {
+//        return this.customerService.findByLastname(surnameContact);
+//    }
+
     @PostMapping
     public Customer saveCustomer(@RequestBody CustomerRegisterDTO newCustomer) {
         return this.customerService.saveCustomer(newCustomer);
@@ -33,11 +38,6 @@ public class CustomerController {
     @GetMapping("/{id}")
     public Customer findById(@PathVariable UUID id) {
         return this.customerService.findById(id);
-    }
-
-    @GetMapping("/{surnameContact}")
-    public Customer findByLastName(@PathVariable String surnameContact) {
-        return this.customerService.findByLastname(surnameContact);
     }
 
     @PutMapping("/{id}")
