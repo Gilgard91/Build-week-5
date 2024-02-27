@@ -12,7 +12,6 @@ import java.util.UUID;
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -45,4 +44,6 @@ private Address address;
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+
 }

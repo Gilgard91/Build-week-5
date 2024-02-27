@@ -10,7 +10,7 @@ public class MailgunSender {
     private String mailgunAPIKey;
     private String domainName;
 
-    public MailgunSender(@Value("${mailgun.apikey}") String mailgunAPIKey, @Value("${mailgun.domainname}") String domainName) {
+    public MailgunSender(@Value("${mailgun.api.key}") String mailgunAPIKey, @Value("${mailgun.domain.name}") String domainName) {
         this.mailgunAPIKey = mailgunAPIKey;
         this.domainName = domainName;
     }
@@ -18,7 +18,7 @@ public class MailgunSender {
     public void sendRegistrationEmail(Customer recipient) {
         Unirest.post("https://api.mailgun.net/v3/" + domainName + "/messages")
                 .basicAuth("api", mailgunAPIKey)
-                .queryString("from", "Ajeje Brazof <polpinato00@gmail.com>")
+                .queryString("from", "Giordano <zagattigiordano@yahoo.it>")
                 .queryString("to", recipient.getEmail())
                 .queryString("subject", "Sign up successfully completed!")
                 .queryString("text", "Thank you " + recipient.getNameContact()).asJson();
