@@ -1,6 +1,6 @@
 package be.epicode.buildWeek5.services;
 
-import be.epicode.buildWeek5.config.MailgunSender;
+import be.epicode.buildWeek5.entities.ClientType;
 import be.epicode.buildWeek5.entities.Customer;
 import be.epicode.buildWeek5.exceptions.NotFoundException;
 import be.epicode.buildWeek5.payloads.CustomerRegisterDTO;
@@ -12,37 +12,53 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
 import java.util.UUID;
 
 @Service
 public class CustomerService {
     @Autowired
     private  CustomerDAO customerDAO;
-    @Autowired
-    private MailgunSender mailgunSender;
-
+Random random = new Random();
     public Page<Customer> getCustomers(int pageNumber, int size, String orderBy) {
         if (size > 100) size = 100;
         Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(orderBy));
         return this.customerDAO.findAll(pageable);
     }
+
+//    public Page<Customer> getCustomersStartingwithLastName(int pageNumber, int size, String orderBy) {
+//        if (size > 100) size = 100;
+//        Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(orderBy));
+//        return this.customerDAO.findAll(pageable);
+//    }
+
     public Customer saveCustomer(CustomerRegisterDTO customerRegisterDTO) {
+       int random1 = new Random().nextInt(ClientType.values().length);
         Customer customer = new Customer();
         customer.setEmail(customerRegisterDTO.email());
-        customer.setAnnualTurnover(customerRegisterDTO.annualTurnover());
+        customer.setAnnualTurnover(random.nextInt(100000,1000000),customerRegisterDTO.annualTurnover());
         customer.setBusinessName(customerRegisterDTO.businessName());
         customer.setDateLastContact(customerRegisterDTO.dateLastContact());
-        customer.setVatNumber(customerRegisterDTO.vatNumber());
-        customer.setPec(customerRegisterDTO.pec());
+        customer.setVatNumber(String.valueOf(random.nextInt(100000,1000000)),customerRegisterDTO.vatNumber());
+        customer.setPec(customerRegisterDTO.nameContact(),customerRegisterDTO.surnameContact(),customerRegisterDTO.pec());
         customer.setPhone(customerRegisterDTO.phone());
         customer.setSertionDate(customerRegisterDTO.sertionDate());
-        Customer savedCustomer = customerDAO.save(customer);
-        mailgunSender.sendRegistrationEmail(customer);
-        return savedCustomer;
+        customer.setEmailContact(customerRegisterDTO.email());
+        customer.setNameContact(customerRegisterDTO.nameContact());
+        customer.setSurnameContact(customerRegisterDTO.surnameContact());
+        customer.setPhoneContact(customerRegisterDTO.phone());
+        customer.setBusinessLogo("https://www.google.com/imgres?nid=k-make-you-laugh%2F&docid=hEAxWkpf0HHSKHDlAQMygUegUIARCdAQ");
+       customer.setClientType(ClientType.values()[random1].toString());
+        return this.customerDAO.save(customer);
     }
     public Customer findById(UUID customerId) {
         return this.customerDAO.findById(customerId).orElseThrow(() -> new NotFoundException(customerId));
     }
+
+//public Customer findByLastname(String lastname) {
+//        return this.customerDAO.findByLastName(lastname).orElseThrow(() -> new NotFoundLastnameException(lastname));
+//}
+
     public Customer findByIdAndUpdate(UUID customerId, Customer updatingCustomer) {
         Customer customer = findById(customerId);
         customer.setEmail(updatingCustomer.getEmail());
@@ -60,4 +76,5 @@ public class CustomerService {
         Customer customer = findById(customerId);
         this.customerDAO.delete(customer);
     }
+
 }

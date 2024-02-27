@@ -26,6 +26,11 @@ public class CustomerController {
         return this.customerService.getCustomers(page, size, orderBy);
     }
 
+//    @GetMapping("/{surnameContact}")
+//    public Customer findByLastName(@PathVariable String surnameContact) {
+//        return this.customerService.findByLastname(surnameContact);
+//    }
+
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
