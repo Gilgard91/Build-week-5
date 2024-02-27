@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(UUID id) {
-        super("L'utente con id " + id + " non è stato trovato");
+        super("Customer with id " + id + " not Found");
     }
 
     public NotFoundException(String message) {
