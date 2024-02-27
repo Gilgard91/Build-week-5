@@ -35,6 +35,11 @@ public class CustomerController {
         return this.customerService.findById(id);
     }
 
+    @GetMapping("/{surnameContact}")
+    public Customer findByLastName(@PathVariable String surnameContact) {
+        return this.customerService.findByLastname(surnameContact);
+    }
+
     @PutMapping("/{id}")
     public Customer findByIdAndUpdate(@PathVariable UUID customerId, @RequestBody Customer updatingCustomer) {
         return this.customerService.findByIdAndUpdate(customerId, updatingCustomer);
