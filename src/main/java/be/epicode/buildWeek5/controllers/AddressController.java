@@ -4,6 +4,7 @@ import be.epicode.buildWeek5.entities.Address;
 import be.epicode.buildWeek5.payloads.AddressDTO;
 import be.epicode.buildWeek5.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +18,15 @@ public class AddressController {
     private AddressService addressService;
 
     @PostMapping
-    public Address saveAddress(@RequestBody AddressDTO payload){return addressService.saveAddress(payload);}
+    public Address saveAddress(@RequestBody AddressDTO payload){
+        return addressService.saveAddress(payload);
+    }
+
+    @GetMapping("")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<Address> getAllAddresses() {
+        return this.addressService.getAddresses();
+    }
 
 
 

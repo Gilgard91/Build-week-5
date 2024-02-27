@@ -22,15 +22,26 @@ public class Address {
     private String street;
     private int number;
     private int postalCode;
-    private String municipality;
+
+    @ManyToOne
+    @JoinColumn(name = "municipality_id")
+    private Municipality municipality;
+
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
 
-    public Address(String street, int number, int postalCode, String municipality, AddressType addressType) {
+    public Address(String street, int number, int postalCode, Municipality municipality, AddressType addressType) {
         this.street = street;
         this.number = number;
         this.postalCode = postalCode;
         this.municipality = municipality;
+        this.addressType = addressType;
+    }
+
+    public Address(String street, int number, int postalCode, AddressType addressType) {
+        this.street = street;
+        this.number = number;
+        this.postalCode = postalCode;
         this.addressType = addressType;
     }
 }
