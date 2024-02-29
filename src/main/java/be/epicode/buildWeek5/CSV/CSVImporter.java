@@ -57,6 +57,9 @@ public class CSVImporter {
 
                     municipalitiesDAO.save(municipality);
                 }
+                else{
+                    System.out.println(provinceName);
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
