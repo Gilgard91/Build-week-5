@@ -28,6 +28,46 @@ public class CSVImporter {
                 String code = nextLine[0];
                 String name = nextLine[1];
 
+                switch (name) {
+                    case "Verbania":
+                        name = "Verbano-Cusio-Ossola";
+                        break;
+                    case "Aosta":
+                        name = "Valle d'Aosta/Vallée d'Aoste";
+                        break;
+                    case "Monza-Brianza":
+                        name = "Monza e della Brianza";
+                        break;
+                    case "Bolzano":
+                        name = "Bolzano/Bozen";
+                        break;
+                    case "La-Spezia":
+                        name = "La Spezia";
+                        break;
+                    case "Reggio-Emilia":
+                        name = "Reggio nell'Emilia";
+                        break;
+                    case "Forli-Cesena":
+                        name = "Forlì-Cesena";
+                        break;
+                    case "Pesaro-Urbino":
+                        name = "Pesaro e Urbino";
+                        break;
+                    case "Ascoli-Piceno":
+                        name = "Ascoli Piceno";
+                        break;
+                    case "Reggio-Calabria":
+                        name = "Reggio Calabria";
+                        break;
+                    case "Vibo-Valentia":
+                        name = "Vibo Valentia";
+                        break;
+                    case "Carbonia Iglesias":
+                        name = "Sud Sardegna";
+                        break;
+
+                }
+
                 Province province = new Province(name, code);
 //              provinceMap.put(code,province);
 
