@@ -36,10 +36,7 @@ public class Runner implements CommandLineRunner {
 
     }
 
-<<<<<<< HEAD
-}
-=======
-}
+
 
 
 //@Component
@@ -61,4 +58,3 @@ public class Runner implements CommandLineRunner {
 //        csvImporter.importMunicipalities(municipalityFileName);
 //    }
 //}
->>>>>>> develop
