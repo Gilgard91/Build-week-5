@@ -1,7 +1,6 @@
 package be.epicode.buildWeek5.services;
 
 import be.epicode.buildWeek5.config.MailgunSender;
-import be.epicode.buildWeek5.enums.ClientType;
 import be.epicode.buildWeek5.entities.Customer;
 import be.epicode.buildWeek5.exceptions.NotFoundException;
 import be.epicode.buildWeek5.payloads.CustomerRegisterDTO;
@@ -13,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -29,29 +29,36 @@ Random random = new Random();
         return this.customerDAO.findAll(pageable);
     }
 
+    public List<Customer> getCustomersList(){
+        return this.customerDAO.findAll();
+    }
+
 //    public Page<Customer> getCustomersStartingwithLastName(int pageNumber, int size, String orderBy) {
 //        if (size > 100) size = 100;
 //        Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(orderBy));
 //        return this.customerDAO.findAll(pageable);
 //    }
 
-    public Customer saveCustomer(CustomerRegisterDTO customerRegisterDTO) {
-       int random1 = new Random().nextInt(ClientType.values().length);
-        Customer customer = new Customer();
-        customer.setEmail(customerRegisterDTO.email());
-        customer.setAnnualTurnover(random.nextInt(100000,1000000),customerRegisterDTO.annualTurnover());
-        customer.setBusinessName(customerRegisterDTO.businessName());
-        customer.setDateLastContact(customerRegisterDTO.dateLastContact());
-        customer.setVatNumber(String.valueOf(random.nextInt(100000,1000000)),customerRegisterDTO.vatNumber());
-        customer.setPec(customerRegisterDTO.nameContact(),customerRegisterDTO.surnameContact(),customerRegisterDTO.pec());
-        customer.setPhone(customerRegisterDTO.phone());
-        customer.setSertionDate(customerRegisterDTO.sertionDate());
-        customer.setEmailContact(customerRegisterDTO.email());
-        customer.setNameContact(customerRegisterDTO.nameContact());
-        customer.setSurnameContact(customerRegisterDTO.surnameContact());
-        customer.setPhoneContact(customerRegisterDTO.phone());
-        customer.setBusinessLogo("https://www.google.com/imgres?nid=k-make-you-laugh%2F&docid=hEAxWkpf0HHSKHDlAQMygUegUIARCdAQ");
-        customer.setClientType(ClientType.values()[random1].toString());
+    public Customer saveCustomer(CustomerRegisterDTO body) {
+//       int random1 = new Random().nextInt(ClientType.values().length);
+        Customer customer = new Customer(body.businessName(),body.vatNumber(),body.email(),body.sertionDate(),
+                body.dateLastContact(),body.annualTurnover(),body.pec(),body.phone(),body.emailContact(),
+                body.nameContact(),body.surnameContact(),body.phoneContact(),body.businessLogo(),
+                body.clientType(),body.indirizzoSedeOperativa(),body.indirizzoSedeLegale());
+//        customer.setEmail(customerRegisterDTO.email());
+//        customer.setAnnualTurnover(random.nextInt(100000,1000000),customerRegisterDTO.annualTurnover());
+//        customer.setBusinessName(customerRegisterDTO.businessName());
+//        customer.setDateLastContact(customerRegisterDTO.dateLastContact());
+//        customer.setVatNumber(String.valueOf(random.nextInt(100000,1000000)),customerRegisterDTO.vatNumber());
+//        customer.setPec(customerRegisterDTO.nameContact(),customerRegisterDTO.surnameContact(),customerRegisterDTO.pec());
+//        customer.setPhone(customerRegisterDTO.phone());
+//        customer.setSertionDate(customerRegisterDTO.sertionDate());
+//        customer.setEmailContact(customerRegisterDTO.email());
+//        customer.setNameContact(customerRegisterDTO.nameContact());
+//        customer.setSurnameContact(customerRegisterDTO.surnameContact());
+//        customer.setPhoneContact(customerRegisterDTO.phone());
+//        customer.setBusinessLogo("https://www.google.com/imgres?nid=k-make-you-laugh%2F&docid=hEAxWkpf0HHSKHDlAQMygUegUIARCdAQ");
+//        customer.setClientType(customerRegisterDTO.clientType());
         Customer savedCustomer = customerDAO.save(customer);
         mailgunSender.sendRegistrationEmail(customer);
         return savedCustomer;

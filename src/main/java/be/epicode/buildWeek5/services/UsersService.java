@@ -55,8 +55,11 @@ public class UsersService {
         return usersDAO.save(found);
     }
 
-    public String uploadImg(MultipartFile img) throws IOException {
+    public String uploadImg(MultipartFile img, UUID id) throws IOException {
+        User found = findById(id);
         String url = (String) cloudinaryUploader.uploader().upload(img.getBytes(), ObjectUtils.emptyMap()).get("url");
+        found.setAvatar(url);
+        usersDAO.save(found);
         return url;
     }
 }

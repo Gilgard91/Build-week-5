@@ -2,16 +2,13 @@ package be.epicode.buildWeek5.controllers;
 
 import be.epicode.buildWeek5.entities.Invoice;
 import be.epicode.buildWeek5.entities.State;
-import be.epicode.buildWeek5.exceptions.BadRequestException;
 import be.epicode.buildWeek5.payloads.invoices.InvoiceDTO;
-import be.epicode.buildWeek5.payloads.invoices.InvoiceResponseDTO;
 import be.epicode.buildWeek5.repositories.InvoiceDAO;
 import be.epicode.buildWeek5.services.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,14 +37,13 @@ public class InvoiceController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('ADMIN')")
-    public InvoiceResponseDTO create(@RequestBody @Validated InvoiceDTO invoice, BindingResult validation) {
-        if(validation.hasErrors()) {
-            System.out.println(validation.getAllErrors());
-            throw new BadRequestException("Something went wrong in the payload!");
-        } else {
-            Invoice newInvoice = invoiceService.saveInvoice(invoice);
-            return new InvoiceResponseDTO(newInvoice.getId());
-        }
+    public Invoice create(@RequestBody @Validated InvoiceDTO invoice) {
+//        if(validation.hasErrors()) {
+//            System.out.println(validation.getAllErrors());
+//            throw new BadRequestException("Something went wrong in the payload!");
+//        } else {
+            return this.invoiceService.saveInvoice(invoice);
+//        }
     }
 
     @PutMapping("/{id}")

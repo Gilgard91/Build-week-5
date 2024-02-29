@@ -1,7 +1,6 @@
 package be.epicode.buildWeek5.entities;
 
 import be.epicode.buildWeek5.enums.UserRole;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,6 +26,7 @@ public class User implements UserDetails {
     private UUID id;
 
     private String username;
+    @Column(unique = true)
     private String email;
     private String password;
     private String name;
@@ -35,9 +35,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Customer customer;
+//    @JsonIgnore
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    private Customer customer;
 
     public User(String username, String email, String password, String name, String surname, String avatar, UserRole role) {
         this.username = username;

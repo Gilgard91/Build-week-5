@@ -34,10 +34,7 @@ public class InvoiceService {
         Invoice invoice = invoiceDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
         invoice.setDate(body.date());
         invoice.setAmount(body.amount());
-        invoice.setInvoiceNumber(body.invoiceNumber());
         invoice.setInvoiceState(body.invoiceState());
-//        Client client = clientsService.findById(body.clientId());
-//        invoice.setClient(client);
         return invoiceDAO.save(invoice);
     }
 
@@ -47,11 +44,11 @@ public class InvoiceService {
     }
 
     public Invoice saveInvoice(InvoiceDTO body){
-        Invoice invoice = new Invoice();
-        invoice.setDate(body.date());
-        invoice.setAmount(body.amount());
-        invoice.setInvoiceNumber(body.invoiceNumber());
-        invoice.setInvoiceState(body.invoiceState());
+        Invoice invoice = new Invoice(body.date(),body.amount(),body.customer(),body.invoiceState());
+//        invoice.setDate(body.date());
+//        invoice.setAmount(body.amount());
+//        invoice.setInvoiceNumber(body.invoiceNumber());
+//        invoice.setInvoiceState(body.invoiceState());
 //        Client client = clientsService.findById(body.clientId());
 //        invoice.setClient(client);
         return invoiceDAO.save(invoice);

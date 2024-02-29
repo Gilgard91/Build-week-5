@@ -47,10 +47,7 @@ public class UsersController {
         usersService.findByIdAndDelete(userId);
     }
 
-    @PostMapping("/upload")
-    public String uploadAvatar(@RequestParam("avatar") MultipartFile img) throws IOException {
-        return this.usersService.uploadImg(img);
-    }
+
 
     @GetMapping("/me")
     public User getProfile(@AuthenticationPrincipal User currentUser){
@@ -66,5 +63,10 @@ public class UsersController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void getMeAndDelete(@AuthenticationPrincipal User currentUser){
         this.usersService.findByIdAndDelete(currentUser.getId());
+    }
+
+    @PostMapping("/upload")
+    public String uploadAvatar(@RequestParam("avatar") MultipartFile img, @RequestParam("id") UUID id) throws IOException {
+        return this.usersService.uploadImg(img, id);
     }
 }

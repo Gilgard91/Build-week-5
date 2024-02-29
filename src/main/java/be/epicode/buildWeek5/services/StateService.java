@@ -28,9 +28,7 @@ public class StateService {
     }
 
     public State saveState(StateDTO body){
-        State state = new State();
-        state.setStateName(body.stateName());
-        state.setInvoices(body.invoices());
+        State state = new State(body.stateName());
         return stateDAO.save(state);
     }
 
@@ -38,7 +36,6 @@ public class StateService {
     public State updateStateById(UUID id, StateDTO body){
         State state = stateDAO.findById(id).orElseThrow(() -> new NotFoundException(id));
         state.setStateName(body.stateName());
-        state.setInvoices(body.invoices());
         return stateDAO.save(state);
     }
 

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 
@@ -24,11 +23,11 @@ public class AddressService {
 
     public List<Address> getAddresses(){return this.addressDAO.findAll();}
 
-    public Address findById(UUID id){
+    public Address findById(int id){
         return addressDAO.findById(id).orElseThrow(()-> new NotFoundException("This address is not registered"));
     }
 
-    public void findByIdAndDelete(UUID id){
+    public void findByIdAndDelete(int id){
         Address found = this.findById(id);
         addressDAO.delete(found);
     }
@@ -39,7 +38,7 @@ public class AddressService {
             throw new NotFoundException("Municipality not found: " + body.municipality().getName());
         }
         Address address = new Address(body.street(),body.number(),body.postalCode(),
-                found,body.addressType());
+                found);
         address.setMunicipality(found);
         addressDAO.save(address);
 
