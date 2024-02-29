@@ -42,7 +42,6 @@ public class Runner implements CommandLineRunner {
 //@Component
 //public class Runner implements CommandLineRunner {
 //
-//    private CSVImporter csvImporter;
 //
 //    @Autowired
 //    public Runner(CSVImporter csvImporter) {
@@ -57,4 +56,4 @@ public class Runner implements CommandLineRunner {
 //        csvImporter.importProvinces(provinceFileName);
 //        csvImporter.importMunicipalities(municipalityFileName);
 //    }
-//}
+}
