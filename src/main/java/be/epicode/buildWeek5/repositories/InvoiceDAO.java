@@ -1,5 +1,6 @@
 package be.epicode.buildWeek5.repositories;
 
+import be.epicode.buildWeek5.entities.Customer;
 import be.epicode.buildWeek5.entities.Invoice;
 import be.epicode.buildWeek5.entities.State;
 import org.springframework.data.domain.Page;
@@ -20,8 +21,7 @@ public interface InvoiceDAO extends JpaRepository<Invoice, UUID> {
     @Query("SELECT i FROM Invoice i WHERE i.amount BETWEEN :minAmount AND :maxAmount")
     public Page<Invoice> findInvoicesByAmountRange(@Param("minAmount") double minAmount, @Param("maxAmount") double maxAmount, Pageable pageable);
     public Page<Invoice> findByInvoiceState(State state, Pageable pageable);
-
-  //  public Page<Invoice> findByClient(Client client, Pageable pageable);
+   public Page<Invoice> findByCustomer(Customer customer, Pageable pageable);
 
 
 

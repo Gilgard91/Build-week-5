@@ -1,5 +1,6 @@
 package be.epicode.buildWeek5.services;
 
+import be.epicode.buildWeek5.entities.Customer;
 import be.epicode.buildWeek5.entities.Invoice;
 import be.epicode.buildWeek5.entities.State;
 import be.epicode.buildWeek5.exceptions.NotFoundException;
@@ -20,6 +21,9 @@ import java.util.UUID;
 public class InvoiceService {
     @Autowired
     InvoiceDAO invoiceDAO;
+
+    @Autowired
+    CustomerService customerService;
 
     public Page<Invoice> getAllInvoices(int page, int size, String orderBy) {
         Pageable pageable = PageRequest.of(page,size, Sort.by(orderBy));
@@ -73,9 +77,9 @@ public class InvoiceService {
         return invoiceDAO.findByInvoiceState(invoiceState, pageable);
     }
 
-   // public Page<Invoice> findByClient(int page, int size, String orderBy, UUID id){
-//        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
-//        Client clientFound = clientsService.findById(id);
-//        return invoiceDAO.findByClient(clientFound, pageable);
-//    }
+    public Page<Invoice> findByCustomer(int page, int size, String orderBy, UUID id){
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        Customer customerFound = customerService.findById(id);
+        return invoiceDAO.findByCustomer(customerFound, pageable);
+    }
 }
