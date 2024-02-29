@@ -16,20 +16,36 @@ public class CustomerTesting {
     private static LocalDate localDate;
 
     @Test
-    public void testEmptyNotEmpty() {
+    public void testEmptyNotEmpty() throws Exception {
         System.out.println("TEST IF CUSTOMER IS EMPTY OR NOT");
-//       customer.setBusinessName("a");
+       customer.setBusinessName("a");
 if (customer.getBusinessName() != null ||
         customer.getVatNumber() != null ||
         customer.getPec() != null ||
         customer.getEmail() != null ||
-        customer.getEmailContact() != null
+        customer.getEmailContact() != null ||
+        customer.getNameContact() != null ||
+        customer.getSurnameContact() != null ||
+        customer.getBusinessLogo() != null ||
+        customer.getClientType() != null
         ) {
-
+    System.out.println("AT LEAST ONE STATEMENT IS TRUE, SO NOT EMPTY");
+    System.out.println(customer);
+    assertNotNull(customer.getBusinessName());
 }
-        System.out.println(customer);
-        assertNotNull(customer.getBusinessName());
-        System.out.println("customer1 is Not Null");
-
+        if (customer.getBusinessName() == null ||
+                customer.getVatNumber() == null ||
+                customer.getPec() == null ||
+                customer.getEmail() == null ||
+                customer.getEmailContact() == null ||
+                customer.getNameContact() == null ||
+                customer.getSurnameContact() == null ||
+                customer.getBusinessLogo() == null ||
+                customer.getClientType() == null
+        ) {
+            System.out.println("AT LEAST ONE STATEMENT IS FALSE, SO EMPTY");
+            System.out.println(customer);
+            assertNotNull(customer.getBusinessName());
+        }
     }
 }
