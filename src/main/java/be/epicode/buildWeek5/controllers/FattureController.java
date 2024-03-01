@@ -11,6 +11,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -57,41 +59,32 @@ public class FattureController {
         fattureService.deleteFatturaById(id);
     }
 
-//    @GetMapping("/date")
-//    public Page<Invoice> findByDate(@RequestParam(defaultValue = "0") int page,
-//                                    @RequestParam(defaultValue = "10") int size,
-//                                    @RequestParam(defaultValue = "id") String sort,
-//                                    @PathVariable LocalDate date){
-//        return invoiceService.findInvoiceByDate(page, size, sort, date);
-//    }
-//    @GetMapping("/year")
-//    public Page<Invoice> findByYear(@RequestParam(defaultValue = "0") int page,
-//                                    @RequestParam(defaultValue = "10") int size,
-//                                    @RequestParam(defaultValue = "id") String sort,
-//                                    @PathVariable int year){
-//        return invoiceService.findByYear(page, size, sort, year);
-//    }
-//    @GetMapping("/state")
-//    public Page<Invoice> findByInvoiceState(@RequestParam(defaultValue = "0") int page,
-//                                            @RequestParam(defaultValue = "10") int size,
-//                                            @RequestParam(defaultValue = "id") String sort,
-//                                            @PathVariable State invoiceState){
-//        return invoiceService.findByInvoiceState(page, size, sort, invoiceState);
-//    }
-//    @GetMapping("/amount-range")
-//    public Page<Invoice> findByAmountRange(@RequestParam(defaultValue = "0") int page,
-//                                           @RequestParam(defaultValue = "10") int size,
-//                                           @RequestParam(defaultValue = "id") String sort,
-//                                           @PathVariable double min, @PathVariable double max){
-//        return invoiceService.findInvoicesByAmountRange(min, max, page, size, sort);
-//    }
 
-    //    @GetMapping("/client")
-//    public Page<Invoice> findByClient(@RequestParam(defaultValue = "0") int page,
-//                                      @RequestParam(defaultValue = "10") int size,
-//                                      @RequestParam(defaultValue = "id") String sort,
-//                                      @PathVariable UUID client){
-//        return invoiceService.findByClient(page, size, sort, client);
-//    }
+    @GetMapping("/filtraPerCliente")
+    public List<Fattura> filtraPerCliente(@RequestParam String ragioneSociale){
+        return this.fattureService.filtraPerCliente(ragioneSociale);
+    }
+
+    @GetMapping("/filtraPerStato")
+    public List<Fattura> filtraPerStato(@RequestParam String stato){
+        return this.fattureService.filtraPerNomeStatoFattura(stato);
+    }
+
+    @GetMapping("/filtraPerData")
+    public List<Fattura> filtraPerData(@RequestParam LocalDate data){
+        return this.fattureService.filtraPerData(data);
+    }
+
+    @GetMapping("/filtraPerAnno")
+    public List<Fattura> filtraPerAnno(@RequestParam LocalDate inizio, @RequestParam LocalDate fine){
+        return this.fattureService.filtraPerAnno(inizio,fine);
+    }
+
+    @GetMapping("/filtraPerImporti")
+    public List<Fattura> filtraPerImporti(@RequestParam double min, @RequestParam double max){
+        return this.fattureService.filtraPerImporti(min, max);
+    }
+
+
 
 }

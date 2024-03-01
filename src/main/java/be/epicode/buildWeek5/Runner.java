@@ -7,7 +7,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Runner implements CommandLineRunner {
+public class  Runner implements CommandLineRunner {
 
     private CSVImporter csvImporter;
 
