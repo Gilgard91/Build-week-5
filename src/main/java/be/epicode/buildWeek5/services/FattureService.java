@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -48,28 +50,21 @@ public class FattureService {
         return fattureDAO.save(fattura);
     }
 
-//    public Page<Invoice> findInvoiceByDate(int page, int size, String orderBy, LocalDate date){
-//        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
-//        return  invoiceDAO.findInvoiceByDate(date, pageable);
-//    }
-//
-//    public Page<Invoice> findByYear(int page, int size, String orderBy, @RequestParam int year){
-//        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
-//        return invoiceDAO.findInvoiceByYear(year, pageable);
-//    }
-//    public Page<Invoice> findInvoicesByAmountRange(double minAmount, double maxAmount, int page, int size, String orderBy) {
-//        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
-//        return invoiceDAO.findInvoicesByAmountRange(minAmount, maxAmount, pageable);
-//    }
-//
-//    public Page<Invoice> findByInvoiceState(int page, int size, String orderBy, State invoiceState){
-//        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
-//        return invoiceDAO.findByInvoiceState(invoiceState, pageable);
-//    }
-//
-//    public Page<Invoice> findByCustomer(int page, int size, String orderBy, UUID id){
-//        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
-//        Customer customerFound = customerService.findById(id);
-//        return invoiceDAO.findByCustomer(customerFound, pageable);
-//    }
+    public List<Fattura> filtraPerCliente(String ragioneSociale){
+        return fattureDAO.findByClienteRagioneSocialeIgnoreCase(ragioneSociale);
+    }
+
+    public List<Fattura> filtraPerNomeStatoFattura(String nomeStato){
+        return fattureDAO.findByStatoFatturaNomeStatoFatturaIgnoreCase(nomeStato);
+    }
+
+    public List<Fattura> filtraPerData(LocalDate data){
+        return fattureDAO.findByData(data);
+    }
+    public List<Fattura> filtraPerAnno(LocalDate inizioAnno, LocalDate fineAnno){
+        return fattureDAO.findByDataBetween(inizioAnno,fineAnno);
+    }
+    public List<Fattura> filtraPerImporti(double minImporto, double maxImporto){
+        return fattureDAO.findByImportoBetween(minImporto,maxImporto);
+    }
 }

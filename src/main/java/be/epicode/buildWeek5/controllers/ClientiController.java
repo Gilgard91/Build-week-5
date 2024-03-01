@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -26,10 +28,27 @@ public class ClientiController {
         return this.clientiService.getClienti(page, size, orderBy);
     }
 
-//    @GetMapping("/{surnameContact}")
-//    public Customer findByLastName(@PathVariable String surnameContact) {
-//        return this.customerService.findByLastname(surnameContact);
-//    }
+
+
+    @GetMapping("/filtraPerNome")
+    public List<Cliente> filtraPerNome(@RequestParam String parteNome){
+        return clientiService.filtraPerNome(parteNome);
+    }
+
+    @GetMapping("/filtraPerFatturato")
+    public List<Cliente> filtraPerFatturato(@RequestParam int minFatturato){
+        return clientiService.filtraPerFatturato(minFatturato);
+    }
+
+    @GetMapping("/filtraPerDataUltimoContatto")
+    public List<Cliente> filtraPerUltimoContatto(@RequestParam LocalDate data){
+        return clientiService.filtraPerUltimoContatto(data);
+    }
+
+    @GetMapping("/filtraPerDataInserimento")
+    public List<Cliente> filtraPerInserimento(@RequestParam LocalDate data){
+        return clientiService.filtraPerDataInserimento(data);
+    }
 
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")

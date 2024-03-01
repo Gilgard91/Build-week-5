@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -33,11 +34,21 @@ Random random = new Random();
         return this.clientiDAO.findAll();
     }
 
-//    public Page<Customer> getCustomersStartingwithLastName(int pageNumber, int size, String orderBy) {
-//        if (size > 100) size = 100;
-//        Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(orderBy));
-//        return this.customerDAO.findAll(pageable);
-//    }
+    public List<Cliente> filtraPerNome(String parteNome){
+        return clientiDAO.findByRagioneSocialeContainingIgnoreCase(parteNome);
+    }
+
+    public List<Cliente> filtraPerFatturato(int minFatturato){
+        return clientiDAO.findByFatturatoAnnualeGreaterThanEqual(minFatturato);
+    }
+
+    public List<Cliente> filtraPerUltimoContatto(LocalDate dataUltimoContatto){
+        return clientiDAO.findByDataUltimoContatto(dataUltimoContatto);
+    }
+
+    public List<Cliente> filtraPerDataInserimento(LocalDate dataInserimento){
+        return clientiDAO.findByDataInserimento(dataInserimento);
+    }
 
     public Cliente saveCliente(ClientiDTO body) {
 //       int random1 = new Random().nextInt(ClientType.values().length);
@@ -53,10 +64,6 @@ Random random = new Random();
     public Cliente findById(UUID clienteId) {
         return this.clientiDAO.findById(clienteId).orElseThrow(() -> new NotFoundException(clienteId));
     }
-
-//public Customer findByLastname(String lastname) {
-//        return this.customerDAO.findByLastName(lastname).orElseThrow(() -> new NotFoundLastnameException(lastname));
-//}
 
     public Cliente findByIdAndUpdate(UUID clienteId, Cliente updatingCliente) {
         Cliente cliente = findById(clienteId);
