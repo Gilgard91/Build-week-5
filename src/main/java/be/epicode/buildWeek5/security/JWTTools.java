@@ -1,6 +1,6 @@
 package be.epicode.buildWeek5.security;
 
-import be.epicode.buildWeek5.entities.User;
+import be.epicode.buildWeek5.entities.Utente;
 import be.epicode.buildWeek5.exceptions.UnauthorizedException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -15,11 +15,11 @@ public class JWTTools {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String createToken(User user) {
+    public String createToken(Utente utente) {
         return Jwts.builder()
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-                .subject(String.valueOf(user.getId()))
+                .subject(String.valueOf(utente.getId()))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes()))
                 .compact();
     }
