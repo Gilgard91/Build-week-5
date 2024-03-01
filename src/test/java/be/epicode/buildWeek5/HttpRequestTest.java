@@ -1,6 +1,7 @@
 package be.epicode.buildWeek5;
 
 
+import be.epicode.buildWeek5.entities.Utente;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -17,7 +18,7 @@ import java.io.IOException;
 @SpringBootTest
 public class HttpRequestTest {
     @Test
-    public void userDoesNotExistTest()throws ClientProtocolException, IOException{
+    public void clienteExistsTest()throws ClientProtocolException, IOException{
         String id = "1df367fe-a365-4b4d-8162-bbfa903fed2b";
         String token = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkyODU3OTIsImV4cCI6MTcwOTM3MjE5Miwic3ViIjoiYmQ4ODBjM2MtYzA0OS00OTQ2LWFjNGUtNzZjMjY3Y2E5Mjc0In0.l1lXotVnnJhtO-Jyv4TdZ9-greWV-4PQIcBnZASce7E";
         HttpUriRequest request = new HttpGet("http://localhost:3001/clienti/"+id);
@@ -25,4 +26,27 @@ public class HttpRequestTest {
         HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
         assertEquals(200, httpResponse.getStatusLine().getStatusCode());
     }
+
+    @Test
+    public void clienteDoesNotExistTest()throws ClientProtocolException, IOException{
+        String id = "1df367fe-a365-4b4d-8162-bbfa903fed2d";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkyODU3OTIsImV4cCI6MTcwOTM3MjE5Miwic3ViIjoiYmQ4ODBjM2MtYzA0OS00OTQ2LWFjNGUtNzZjMjY3Y2E5Mjc0In0.l1lXotVnnJhtO-Jyv4TdZ9-greWV-4PQIcBnZASce7E";
+        HttpUriRequest request = new HttpGet("http://localhost:3001/clienti/"+id);
+        request.setHeader("Authorization", "Bearer " + token);
+        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
+        assertEquals(404, httpResponse.getStatusLine().getStatusCode());
+    }
+
+    @Test
+    public void userDoesNotExistTest()throws ClientProtocolException, IOException{
+        String id = "bd880c3c-c049-4946-ac4e-76c267ca9274";
+        String token = "eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MDkyODU3OTIsImV4cCI6MTcwOTM3MjE5Miwic3ViIjoiYmQ4ODBjM2MtYzA0OS00OTQ2LWFjNGUtNzZjMjY3Y2E5Mjc0In0.l1lXotVnnJhtO-Jyv4TdZ9-greWV-4PQIcBnZASce7E";
+        HttpUriRequest request = new HttpGet("http://localhost:3001/users/"+id);
+        request.setHeader("Authorization", "Bearer " + token);
+        HttpResponse httpResponse = HttpClientBuilder.create().build().execute(request);
+        assertEquals(200, httpResponse.getStatusLine().getStatusCode());
+    }
+
+
+
 }
