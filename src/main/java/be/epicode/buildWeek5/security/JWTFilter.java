@@ -1,8 +1,8 @@
 package be.epicode.buildWeek5.security;
 
-import be.epicode.buildWeek5.entities.User;
+import be.epicode.buildWeek5.entities.Utente;
 import be.epicode.buildWeek5.exceptions.UnauthorizedException;
-import be.epicode.buildWeek5.services.UsersService;
+import be.epicode.buildWeek5.services.UtentiService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class JWTFilter extends OncePerRequestFilter {
     private JWTTools jwtTools;
 
     @Autowired
-    private UsersService usersService;
+    private UtentiService utentiService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -36,9 +36,9 @@ public class JWTFilter extends OncePerRequestFilter {
         System.out.println("ACCESS TOKEN " + accessToken);
         jwtTools.verifyToken(accessToken);
         String id = jwtTools.extractIdFromToken(accessToken);
-        User user = usersService.findById(UUID.fromString(id));
+        Utente utente = utentiService.findById(UUID.fromString(id));
 
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(utente, null, utente.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
 
@@ -46,7 +46,8 @@ public class JWTFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return new AntPathMatcher().match("/auth/**", request.getServletPath());
-
+        String servletPath = request.getServletPath();
+        return new AntPathMatcher().match("/auth/**", servletPath) ||
+                new AntPathMatcher().match("/users/upload", servletPath) ;
     }
 }

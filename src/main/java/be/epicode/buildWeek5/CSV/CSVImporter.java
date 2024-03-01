@@ -1,10 +1,10 @@
 package be.epicode.buildWeek5.CSV;
 
 import au.com.bytecode.opencsv.CSVReader;
-import be.epicode.buildWeek5.entities.Municipality;
-import be.epicode.buildWeek5.entities.Province;
-import be.epicode.buildWeek5.repositories.MunicipalitiesDAO;
-import be.epicode.buildWeek5.repositories.ProvincesDAO;
+import be.epicode.buildWeek5.entities.Comune;
+import be.epicode.buildWeek5.entities.Provincia;
+import be.epicode.buildWeek5.repositories.ComuniDAO;
+import be.epicode.buildWeek5.repositories.ProvinceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,61 +15,88 @@ import java.io.IOException;
 public class CSVImporter {
 
     @Autowired
-    private ProvincesDAO provincesDAO;
+    private ProvinceDAO provinceDAO;
     @Autowired
-    private MunicipalitiesDAO municipalitiesDAO;
+    private ComuniDAO comuniDAO;
 
-//    private Map<String, Province> provinceMap = new HashMap<>();
 
-    public void importProvinces(String fileName) {
+    public void importProvince(String fileName) {
         try (CSVReader reader = new CSVReader(new FileReader(fileName), ';')) {
             String[] nextLine;
             while ((nextLine = reader.readNext()) != null) {
-                String code = nextLine[0];
-                String name = nextLine[1];
+                String sigla = nextLine[0];
+                String nome = nextLine[1];
 
-                Province province = new Province(name, code);
-//              provinceMap.put(code,province);
+                switch (nome) {
+                    case "Verbania":
+                        nome = "Verbano-Cusio-Ossola";
+                        break;
+                    case "Aosta":
+                        nome = "Valle d'Aosta/Vallée d'Aoste";
+                        break;
+                    case "Monza-Brianza":
+                        nome = "Monza e della Brianza";
+                        break;
+                    case "Bolzano":
+                        nome = "Bolzano/Bozen";
+                        break;
+                    case "La-Spezia":
+                        nome = "La Spezia";
+                        break;
+                    case "Reggio-Emilia":
+                        nome = "Reggio nell'Emilia";
+                        break;
+                    case "Forli-Cesena":
+                        nome = "Forlì-Cesena";
+                        break;
+                    case "Pesaro-Urbino":
+                        nome = "Pesaro e Urbino";
+                        break;
+                    case "Ascoli-Piceno":
+                        nome = "Ascoli Piceno";
+                        break;
+                    case "Reggio-Calabria":
+                        nome = "Reggio Calabria";
+                        break;
+                    case "Vibo-Valentia":
+                        nome = "Vibo Valentia";
+                        break;
+                    case "Carbonia Iglesias":
+                        nome = "Sud Sardegna";
+                        break;
 
-                provincesDAO.save(province);
+                }
+
+                Provincia provincia = new Provincia(nome, sigla);
+
+                provinceDAO.save(provincia);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void importMunicipalities(String fileName) {
+    public void importComuni(String fileName) {
         try (CSVReader reader = new CSVReader(new FileReader(fileName), ';')) {
             String[] nextLine;
             while ((nextLine = reader.readNext()) != null) {
-                String name = nextLine[2];
-                String provinceName = nextLine.length >= 4 ? nextLine[3] : null;
+                String nome = nextLine[2];
+                String nomeProvincia = nextLine.length >= 4 ? nextLine[3] : null;
 
-//                System.out.println("Municipality Name: " + name);
-//                System.out.println("Province Name: " + provinceName);
+                Provincia provincia = provinceDAO.findProvinceByNome(nomeProvincia);
 
+                if (provincia != null) {
+                    Comune comune = new Comune(nome, provincia);
 
-//                Province province = provinceMap.get(provinceCode);
-                Province province = provincesDAO.findProvinceByName(provinceName);
-
-                if (province != null) {
-                    Municipality municipality = new Municipality(name, province);
-
-                    municipalitiesDAO.save(municipality);
+                    comuniDAO.save(comune);
+                }
+                else{
+                    System.out.println(nomeProvincia);
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-//    private String combineColumns(String[] columns, int startIndex, int endIndex) {
-//        StringBuilder combinedValue = new StringBuilder();
-//        for (int i = startIndex; i <= endIndex; i++) {
-//            combinedValue.append(columns[i]);
-//            if (i < endIndex) {
-//                combinedValue.append(" ");
-//            }
-//        }
-//        return combinedValue.toString();
-//    }
+
 }

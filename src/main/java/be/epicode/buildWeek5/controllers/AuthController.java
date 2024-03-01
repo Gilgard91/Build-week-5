@@ -1,11 +1,11 @@
 package be.epicode.buildWeek5.controllers;
 
-import be.epicode.buildWeek5.entities.User;
+import be.epicode.buildWeek5.entities.Utente;
 import be.epicode.buildWeek5.payloads.LoginResponseDTO;
-import be.epicode.buildWeek5.payloads.UserDTO;
-import be.epicode.buildWeek5.payloads.UserLoginDTO;
+import be.epicode.buildWeek5.payloads.UtentiDTO;
+import be.epicode.buildWeek5.payloads.UtentiLoginDTO;
 import be.epicode.buildWeek5.services.AuthService;
-import be.epicode.buildWeek5.services.UsersService;
+import be.epicode.buildWeek5.services.UtentiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +17,20 @@ public class AuthController {
     @Autowired
     private AuthService authService;
     @Autowired
-    private UsersService usersService;
+    private UtentiService utentiService;
 
 
     @PostMapping("/login")
-    public LoginResponseDTO login(@RequestBody UserLoginDTO body){
+    public LoginResponseDTO login(@RequestBody UtentiLoginDTO body){
         return new LoginResponseDTO(authService.authenticateUserAndGenerateToken(body));
     }
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public User saveUser(@RequestBody UserDTO body){
+    public Utente saveUser(@RequestBody UtentiDTO body){
         return this.authService.save(body);
     }
+
+
+
 }
