@@ -48,6 +48,7 @@ Random random = new Random();
 
         Cliente savedCliente = clientiDAO.save(cliente);
         mailgunSender.sendRegistrationEmail(cliente);
+
         return savedCliente;
     }
     public Cliente findById(UUID clienteId) {
