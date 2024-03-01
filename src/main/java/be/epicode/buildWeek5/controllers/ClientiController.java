@@ -21,7 +21,7 @@ public class ClientiController {
     private ClientiService clientiService;
 
     @GetMapping
-    public Page<Cliente> getAllCLienti(
+    public Page<Cliente> getAllClienti(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String orderBy) {

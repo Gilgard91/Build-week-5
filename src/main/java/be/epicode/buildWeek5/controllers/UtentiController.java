@@ -30,6 +30,7 @@ public class UtentiController {
 
     @GetMapping("/{userId}")
     @PreAuthorize("hasAuthority('ADMIN')")
+    @ResponseStatus(HttpStatus.OK)
     public Utente findById(@PathVariable UUID userId){
         return utentiService.findById(userId);
     }
