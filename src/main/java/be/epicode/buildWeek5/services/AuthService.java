@@ -1,10 +1,10 @@
 package be.epicode.buildWeek5.services;
 
-import be.epicode.buildWeek5.entities.User;
+import be.epicode.buildWeek5.entities.Utente;
 import be.epicode.buildWeek5.exceptions.UnauthorizedException;
-import be.epicode.buildWeek5.payloads.UserDTO;
-import be.epicode.buildWeek5.payloads.UserLoginDTO;
-import be.epicode.buildWeek5.repositories.UsersDAO;
+import be.epicode.buildWeek5.payloads.UtentiDTO;
+import be.epicode.buildWeek5.payloads.UtentiLoginDTO;
+import be.epicode.buildWeek5.repositories.UtentiDAO;
 import be.epicode.buildWeek5.security.JWTTools;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,23 +16,23 @@ public class AuthService {
     @Autowired
     private JWTTools jwtTools;
     @Autowired
-    private UsersDAO usersDAO;
+    private UtentiDAO utentiDAO;
     @Autowired
-    private UsersService usersService;
+    private UtentiService utentiService;
     @Autowired
     private PasswordEncoder bcrypt;
 
 
-    public User save(UserDTO body){
-        User newUser = new User(body.username(),body.email(), bcrypt.encode(body.password()),
-                body.name(),body.surname(),body.avatar(),body.role());
-        return usersDAO.save(newUser);
+    public Utente save(UtentiDTO body){
+        Utente newUtente = new Utente(body.username(),body.email(), bcrypt.encode(body.password()),
+                body.nome(),body.cognome(),body.avatar(),body.ruolo());
+        return utentiDAO.save(newUtente);
     }
 
-    public String authenticateUserAndGenerateToken(UserLoginDTO payload) {
-        User user = usersService.findByEmail(payload.email());
-        if (bcrypt.matches(payload.password(), user.getPassword())) {
-            return jwtTools.createToken(user);
+    public String authenticateUserAndGenerateToken(UtentiLoginDTO payload) {
+        Utente utente = utentiService.findByEmail(payload.email());
+        if (bcrypt.matches(payload.password(), utente.getPassword())) {
+            return jwtTools.createToken(utente);
         } else {
             throw new UnauthorizedException("Credenziali sbagliate!");
         }
