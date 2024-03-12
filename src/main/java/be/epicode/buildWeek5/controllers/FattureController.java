@@ -48,7 +48,7 @@ public class FattureController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    Fattura updateById(@PathVariable UUID id, @RequestBody FattureDTO body) {
+    public Fattura updateById(@PathVariable UUID id, @RequestBody FattureDTO body) {
         return fattureService.updateFatturaById(id, body);
     }
 
